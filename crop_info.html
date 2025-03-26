@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ crop.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .crop-image {
+            width: 30%; /* Reduce the width to 30% */
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto; /* Center the image */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .details {
+            margin-top: 20px;
+        }
+        .details h2 {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+        .details p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .btn-back {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename=crop_image) }}" alt="{{ crop.title }}" class="crop-image">
+        <h1>{{ crop.title }}</h1>
+        <div class="details">
+            {% for detail in crop.details %}
+                <h2>{{ detail.heading }}</h2>
+                {% for point in detail.content %}
+                    {% if point.strip() %}
+                        <p>{{ point.strip()|safe }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('crop_pred') }}" class="btn btn-secondary btn-back">Back to Home</a>
+    </div>
+</body>
+</html>
